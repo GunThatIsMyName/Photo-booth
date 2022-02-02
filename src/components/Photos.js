@@ -18,7 +18,7 @@ import { photoStoreData } from "../utils/helps";
 import Error from "./Error";
 import Loader from "./Loader";
 
-function Photos() {
+const Photos=()=> {
   const dispatch = useDispatch();
   const {
     photos: { products, page, loading, error },

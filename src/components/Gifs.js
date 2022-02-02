@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
+
+// redux
 import { useSelector, useDispatch } from "react-redux";
 import { errorGifs, loadingGifs, resetGifs, setGifs } from "../redux/actions/GifsActions";
+
+// utils and styles
 import { ImageItem } from "../styles/Main.styles";
 import { API_ENDPOINT, API_KEY } from "../utils/Api";
 import { gifStoreData } from "../utils/helps";
+
+// components
 import Error from "./Error";
 import Loader from "./Loader";
-// import { dataList } from "../utils/helps";
 
 const Gifs = () => {
   const dispatch = useDispatch();
@@ -52,7 +57,6 @@ const Gifs = () => {
   // cleaning Products List
   useEffect(() => {
     return () => {
-      console.log("gifs out!");
       dispatch(resetGifs());
     };
     // eslint-disable-next-line

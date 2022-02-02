@@ -9,19 +9,6 @@ export const Wrapper = styled.section`
   .main__title {
     font-size: 2rem;
   }
-
-  .main__form {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-gap: 1rem;
-    margin-bottom: 2rem;
-    input {
-      font-size: 1.4rem;
-      padding: 0 10px;
-    }
-  }
-
   .main__btn__pagination {
     display: flex;
     margin: auto;
