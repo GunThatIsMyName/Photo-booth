@@ -1,5 +1,8 @@
 import {combineReducers} from "redux";
-import { gifsReducer, photosReducer } from "./mainReducers";
+
+// Reducers
+import { gifsReducer } from "./gifsReducers";
+import { photosReducer } from "./photosReducers";
 
 const reducers = combineReducers({
     gifs:gifsReducer,

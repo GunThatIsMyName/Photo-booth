@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useSelector,useDispatch } from "react-redux";
+import { resetPhotos, setPhotos } from "../redux/actions/PhotoActions";
 import { API_ENDPOINT2, CLIENT_ID } from "../utils/Api";
 
 function Photos() {
-  const [page,setPage]=useState(1);
-  const [list, setList] = useState([]);
+
+  const dispatch = useDispatch();
+  const {products,page} = useSelector(state=>state.photos);
 
   const getData = async () => {
     const response = await fetch(`${API_ENDPOINT2}/photos?client_id=${CLIENT_ID}&per_page=20&page=${page}`);
@@ -15,16 +18,26 @@ function Photos() {
       return { id, image, description };
     });
 
-    setList((prev) => [...prev, ...newList]);
+    dispatch(setPhotos(newList));
   };
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line
   }, [page]);
+
+
+  // Cleaning photos
+  useEffect(() => {
+    return()=>{
+      dispatch(resetPhotos());
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
-      {list.map((item) => {
+      {products.map((item) => {
         const { id, image, description } = item;
         return (
           <div key={id}>

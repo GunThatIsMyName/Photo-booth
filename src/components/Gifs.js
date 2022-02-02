@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { setGifs } from "../redux/actions/Actions";
-import { API_ENDPOINT, API_ENDPOINT2, API_KEY, CLIENT_ID } from "../utils/Api";
+import React, { useEffect } from "react";
+import { useSelector ,useDispatch} from "react-redux";
+import { resetGifs, setGifs } from "../redux/actions/GifsActions";
+import { API_ENDPOINT, API_KEY } from "../utils/Api";
 // import { dataList } from "../utils/helps";
 
-function Gifs() {
-  const [limit, setLimit] = useState(0);
-
+const Gifs=()=> {
   const dispatch = useDispatch();
-  const {products} = useSelector(state=>state.gifs);
-  console.log(products,"hello")
+  const { products, limit } = useSelector((state) => state.gifs);
 
   const getGifty = async () => {
     const response = await fetch(
@@ -25,6 +21,8 @@ function Gifs() {
       } = images;
       return { id, title, image };
     });
+
+    // dispatch  init GIFs Data.
     dispatch(setGifs(getData));
   };
 
@@ -32,6 +30,16 @@ function Gifs() {
     getGifty();
     // eslint-disable-next-line
   }, [limit]);
+
+
+  // cleaning Products List 
+  useEffect(()=>{
+    return()=>{
+      console.log("gifs out!")
+      dispatch(resetGifs());
+    }
+     // eslint-disable-next-line
+  },[])
 
   return (
     <>

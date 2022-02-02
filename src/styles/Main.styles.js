@@ -4,6 +4,7 @@ export const Wrapper = styled.section`
   max-width: 1200px;
   margin: auto;
   width: 80%;
+  margin-bottom:10rem;
 
   .main__title {
     font-size: 2rem;
@@ -21,6 +22,11 @@ export const Wrapper = styled.section`
     }
   }
 
+  .main__btn__pagination{
+    display:flex;
+    margin:auto;
+  }
+
   `;
 
 export const MainHero = styled.main`
@@ -29,6 +35,7 @@ export const MainHero = styled.main`
   grid-template-columns:repeat(4,1fr);
   grid-gap:10px;
   margin: 0 auto;
+  margin-bottom:10rem;
   .photo__image {
       width: 100%;
       height:100%;
@@ -36,10 +43,10 @@ export const MainHero = styled.main`
     }
     
     @media screen and (max-width:991px){
-        column-count:3;     
+      grid-template-columns:repeat(3,1fr);
   }
     @media screen and (max-width:640px){
-        column-count:2;     
+      grid-template-columns:repeat(2,1fr);
   }
 
 `;
