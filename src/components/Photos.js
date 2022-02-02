@@ -1,22 +1,42 @@
 import React, { useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { resetPhotos, setPhotos } from "../redux/actions/PhotoActions";
 import { API_ENDPOINT2, CLIENT_ID } from "../utils/Api";
 
 function Photos() {
-
   const dispatch = useDispatch();
-  const {products,page} = useSelector(state=>state.photos);
+  const {
+    photos: { products, page },
+    main: { search },
+  } = useSelector((state) => state);
 
   const getData = async () => {
-    const response = await fetch(`${API_ENDPOINT2}/photos?client_id=${CLIENT_ID}&per_page=20&page=${page}`);
-    const data = await response.json();
+    let newList;
+    if (search) {
+      console.log(search)
+      const response = await fetch(
+        `${API_ENDPOINT2}/search/photos?client_id=${CLIENT_ID}&per_page=12&page=${page}&query=${search}`
+      );
+      const {results} = await response.json();
+      newList = results.map((item) => {
+        const { id, alt_description: description, urls } = item;
+        const { regular: image } = urls;
+        return { id, image, description };
+      });
 
-    let newList = data.map((item) => {
-      const { id, alt_description: description, urls } = item;
-      const { regular:image } = urls;
-      return { id, image, description };
-    });
+    } else {
+      const response = await fetch(
+        `${API_ENDPOINT2}/photos?client_id=${CLIENT_ID}&per_page=12&page=${page}`
+      );
+      const data = await response.json();
+      console.log(data,"2")
+
+      newList = data.map((item) => {
+        const { id, alt_description: description, urls } = item;
+        const { regular: image } = urls;
+        return { id, image, description };
+      });
+    }
 
     dispatch(setPhotos(newList));
   };
@@ -24,14 +44,13 @@ function Photos() {
   useEffect(() => {
     getData();
     // eslint-disable-next-line
-  }, [page]);
-
+  }, [page,search]);
 
   // Cleaning photos
   useEffect(() => {
-    return()=>{
+    return () => {
       dispatch(resetPhotos());
-    }
+    };
     // eslint-disable-next-line
   }, []);
 

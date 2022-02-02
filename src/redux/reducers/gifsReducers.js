@@ -10,7 +10,7 @@ export const gifsReducer = (state = gifsState, { type, payload }) => {
     case gifsActionType.SET_GIF:
       return {...state,products:[...state.products,...payload]};
     case gifsActionType.PAGE_UPDATE_GIF:
-      return {...state,limit:state.limit+20};
+      return {...state,limit:state.limit+12};
     case gifsActionType.RESET_GIF:
         return gifsState
     default:
