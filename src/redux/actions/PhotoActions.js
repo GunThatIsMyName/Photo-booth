@@ -3,6 +3,8 @@ export const photosActionType = {
     PAGE_UPDATE_PHOTO:"PAGE_UPDATE_PHOTO",
     PAGE_RESET_PHOTO:"PAGE_RESET_PHOTO",
     RESET_PHOTO:"RESET_PHOTO",
+    LOADING_PHOTO:"LOADING_PHOTO",
+    ERROR_PHOTO:"ERROR_PHOTO",
 }
 
 // PHOTOS ACTIONS
@@ -20,5 +22,15 @@ export const updatePhotos = ()=>{
 export const resetPhotos = ()=>{
     return{
         type:photosActionType.RESET_PHOTO,
+    };
+}
+export const loadingPhotos = ()=>{
+    return{
+        type:photosActionType.LOADING_PHOTO,
+    };
+}
+export const errorPhotos = ()=>{
+    return{
+        type:photosActionType.ERROR_PHOTO,
     };
 }

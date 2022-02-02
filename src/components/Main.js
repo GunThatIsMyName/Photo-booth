@@ -5,7 +5,7 @@ import { resetGifs, updateGifs } from "../redux/actions/GifsActions";
 import { setSearchKeyword } from "../redux/actions/MainAction";
 import { resetPhotos, updatePhotos } from "../redux/actions/PhotoActions";
 
-import { MainHero, Wrapper } from "../styles/Main.styles";
+import { MainBtnList, MainHero, Wrapper } from "../styles/Main.styles";
 import { searchList } from "../utils/helps";
 
 function Main() {
@@ -39,6 +39,10 @@ function Main() {
 
   const handleSearchQuery=(e)=>{
     const {keyword} = e.target.dataset;
+    if(keyword === search){
+      return;
+    }
+    setSearch(keyword);
     resetDatas();
     dispatch(setSearchKeyword(keyword));
   }
@@ -59,11 +63,11 @@ function Main() {
         />
         <button className="button-30">Search 🔍 </button>
       </form>
-      <div className="main__btn__box">
-        {searchList.map((search) => {
-          return <button onClick={handleSearchQuery} data-keyword={search.text} key={search.id}>{search.text}</button>;
+      <MainBtnList className="main__btn__box">
+        {searchList.map((keyword) => {
+          return <button className={`main__btn__item ${search===keyword.text ? "active" : null}`} onClick={handleSearchQuery} data-keyword={keyword.text} key={keyword.id}>{keyword.text}</button>;
         })}
-      </div>
+      </MainBtnList>
 
       <ul>
         <Link to="/">
@@ -80,7 +84,7 @@ function Main() {
       </MainHero>
 
       <button className="main__btn__pagination" onClick={handlePagination}>
-        More Gifs
+        더 보 기
       </button>
     </Wrapper>
   );

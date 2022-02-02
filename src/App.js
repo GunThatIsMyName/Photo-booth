@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import styled from "styled-components";
 import Gifs from "./components/Gifs";
 import Main from "./components/Main";
 import Photos from "./components/Photos";

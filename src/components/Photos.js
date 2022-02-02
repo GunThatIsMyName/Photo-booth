@@ -1,50 +1,61 @@
 import React, { useEffect } from "react";
+
+// redux
 import { useSelector, useDispatch } from "react-redux";
-import { resetPhotos, setPhotos } from "../redux/actions/PhotoActions";
+import {
+  errorPhotos,
+  loadingPhotos,
+  resetPhotos,
+  setPhotos,
+} from "../redux/actions/PhotoActions";
+import { ImageItem } from "../styles/Main.styles";
+
+// Utils
 import { API_ENDPOINT2, CLIENT_ID } from "../utils/Api";
+import { photoStoreData } from "../utils/helps";
+
+// components
+import Error from "./Error";
+import Loader from "./Loader";
 
 function Photos() {
   const dispatch = useDispatch();
   const {
-    photos: { products, page },
+    photos: { products, page, loading, error },
     main: { search },
   } = useSelector((state) => state);
 
   const getData = async () => {
     let newList;
+    dispatch(loadingPhotos());
     if (search) {
-      console.log(search)
-      const response = await fetch(
-        `${API_ENDPOINT2}/search/photos?client_id=${CLIENT_ID}&per_page=12&page=${page}&query=${search}`
-      );
-      const {results} = await response.json();
-      newList = results.map((item) => {
-        const { id, alt_description: description, urls } = item;
-        const { regular: image } = urls;
-        return { id, image, description };
-      });
-
+      try {
+        const response = await fetch(
+          `${API_ENDPOINT2}/search/photos?client_id=${CLIENT_ID}&per_page=12&page=${page}&query=${search}`
+        );
+        const { results } = await response.json();
+        newList = photoStoreData(results);
+      } catch {
+        dispatch(errorPhotos());
+      }
     } else {
-      const response = await fetch(
-        `${API_ENDPOINT2}/photos?client_id=${CLIENT_ID}&per_page=12&page=${page}`
-      );
-      const data = await response.json();
-      console.log(data,"2")
-
-      newList = data.map((item) => {
-        const { id, alt_description: description, urls } = item;
-        const { regular: image } = urls;
-        return { id, image, description };
-      });
+      try {
+        const response = await fetch(
+          `${API_ENDPOINT2}/photos?client_id=${CLIENT_ID}&per_page=12&page=${page}`
+        );
+        const data = await response.json();
+        newList = photoStoreData(data);
+      } catch {
+        dispatch(errorPhotos());
+      }
     }
-
     dispatch(setPhotos(newList));
   };
 
   useEffect(() => {
     getData();
     // eslint-disable-next-line
-  }, [page,search]);
+  }, [page, search]);
 
   // Cleaning photos
   useEffect(() => {
@@ -54,17 +65,21 @@ function Photos() {
     // eslint-disable-next-line
   }, []);
 
+  if (error) {
+    return <Error />;
+  }
+
   return (
     <>
       {products.map((item) => {
         const { id, image, description } = item;
         return (
           <div key={id}>
-            <img className="photo__image" src={image} alt={description} />
-            {/* <h2>{description}</h2> */}
+            <ImageItem className="photo__image" src={image} alt={description} />
           </div>
         );
       })}
+      {loading && <Loader />}
     </>
   );
 }
