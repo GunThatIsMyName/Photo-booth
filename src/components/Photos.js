@@ -33,8 +33,6 @@ function Photos() {
           </div>
         );
       })}
-
-<button onClick={() => setPage((prev) => prev + 1)}>More photos</button>
     </>
   );
 }
