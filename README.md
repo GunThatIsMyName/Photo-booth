@@ -6,8 +6,8 @@
 Photo booth [사이트 링크](https://cono-photo-booth.netlify.app/)
 
 ## 2️⃣움짤 및 사진 사이트 사이트 에 대해서
-Giphy , Unsplash Rest Api 를 이용해서 사진들을 받아와서 보여줍니다.
-검색을 통해서 마음에 드는  사진들을 찾을수 있습니다.
+Giphy , Unsplash Rest Api 를 이용해서 사진들을 받아와서 보여줍니다. <br />
+검색을 통해서 마음에 드는  사진들을 찾을수 있습니다. <br />
 미리 설정해둔 검색어 키워드를 클릭하면 해당 키워드에 사진을 불러올수 있습니다.
 
 Redux 를 사용해서 state 관리를 했습니다.
